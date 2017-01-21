@@ -1,6 +1,6 @@
 /**
  * An inverted index class.
- * @class Inverted Index.
+ * @class
  */
 class InvertedIndex {
   /**
@@ -77,7 +77,7 @@ class InvertedIndex {
     }
 
     try {
-      this.jsonContent = file;
+      this.jsonFile = file;
       let check = true;
       file.forEach((key) => {
         if (key.title !== undefined && file.text !== undefined) {

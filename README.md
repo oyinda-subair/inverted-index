@@ -1,1 +1,2 @@
+[![Coverage Status](https://coveralls.io/repos/github/andela-osubair/inverted-index/badge.svg?branch=staging)](https://coveralls.io/github/andela-osubair/inverted-index?branch=staging)
 # inverted-index
