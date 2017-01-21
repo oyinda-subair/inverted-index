@@ -78,7 +78,7 @@ class InvertedIndex {
     try {
       this.jsonFile = file;
       let check = true;
-      file.forEach((key) => {
+      this.jsonFile.forEach((key) => {
         if (key.title !== undefined && file.text !== undefined) {
           check = false;
         }
