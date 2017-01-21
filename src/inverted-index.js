@@ -70,7 +70,6 @@ class InvertedIndex {
    * @param {String} file
    * @returns {Array} Returns boolean and a message.
    */
-
   validateFile(file) {
     if (typeof file !== 'object' || file.length === 0) {
       return [false, 'Empty Json File, please upload a new file'];
