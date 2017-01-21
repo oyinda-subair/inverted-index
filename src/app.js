@@ -18,7 +18,7 @@ app.controller('IndexController', ($scope) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const fileDetails = e.target.result;
-        const validate = invertedIndex.validateFile(fileDetails);
+        const validate = invertedIndex.validateFile(JSON.parse(fileDetails));
         const firstValue = validate[0];
         const secValue = validate[1];
         if (!firstValue) {

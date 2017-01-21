@@ -72,7 +72,7 @@ class InvertedIndex {
    */
   validateFile(file) {
     if (typeof file !== 'object' || file.length === 0) {
-      return [false, 'Empty Json File, please upload a new file'];
+      return [false, 'File is empty please a new file'];
     }
 
     try {
@@ -89,7 +89,7 @@ class InvertedIndex {
       if (!check) {
         return [false, 'Invalid File Content'];
       }
-      return [true, 'Valid File'];
+      return [true, 'File Uploaded Successfully'];
     } catch (err) {
       if (err instanceof SyntaxError) {
         return [false, 'syntax error'];
