@@ -36,53 +36,59 @@
                 <input class="file-path validate" type="text" placeholder="Upload one or more files">
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
-            </div>
-
+            <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
           </div>
           <div class="row" ng-hide="{{showMessage}}">
-            <div class="input-field col s12">
+            <div class="col s12">
               <p class="red-text">{{message}}</p>
             </div>
           </div>
           <div class="row">
+            <label>Upload then select a file to create index</label>
+            <select class="browser-default" id="uploadedFiles">
+              <option ng-if="!documents.length" disabled selected>Upload a file</option>
+              <option value="" ng-if="documents.length" disabled selected>Choose your file</option>
+              <option value="{{value}}" ng-repeat="value in documents">{{value.name}}</option>
+            </select>
             <div class="input-field col s12">
-              <div ng-show="{{documents}}">
-                <div class="card-panel" ng-repeat="value in documents">
-                  <strong>
-                    {{value.name}}
-                  </strong>
-                  <button class="btn purple right lighten-1" ng-show="{{indexShow}}" ng-click="indexFile(value)">Create Index</button>
-                </div>
-                <table class="striped">
-                  <thead>
-                    <tr>
-                      <th>{{file}}</th>
-                      <th ng-repeat="(num,value) in docs">{{'Doc_'+(num+1)}}</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr ng-repeat="(key, val) in words">
-                      <td>{{key}}</td>
-                      <td ng-repeat="(word, value) in docs">
-                        <i class="material-icons teal-text" ng-if="words[key].includes(word)">
-                      check
-                    </i>
-                        <i class="material-icons red-text" ng-if="!words[key].includes(word)">
-                      close
-                    </i>
-                      </td>
-                      </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div ng-if="documents.length">
+                <button class="btn purple right lighten-1" ng-click="indexFile()">Create Index</button>
               </div>
             </div>
+          </div>
+          <div class="row">
+            {{filename}}
+            <table class="striped">
+              <thead>
+                <tr>
+                  <th>Term</th>
+                  <th ng-repeat="(keys, value) in docs track by $index">{{'Doc_'+(keys+1)}}</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr ng-repeat="(key, val) in words track by $index">
+                  <td>{{key}}</td>
+                  <td ng-repeat="(word, value) in docs track by $index">
+                    <i class="material-icons teal-text" ng-if="words[key].includes(word)">
+                      check
+                    </i>
+                    <i class="material-icons red-text" ng-if="!words[key].includes(word)">
+                      close
+                    </i>
+                  </td>
+                  </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!--<ul class="collapsible popout" data-collapsible="accordion">
+              <li ng-repeat="file in indexedFile">
+                <div class="collapsible-header"><i class="material-icons">label_outline</i>{{file}}</div>
+                <div class="collapsible-body">
+                </div>
+              </li>
+            </ul>-->
           </div>
         </form>
       </div>
@@ -92,16 +98,26 @@
           <div class="row">
             <div class="input-field">
               <i class="material-icons prefix">search</i>
-              <input id="last_name" type="text" class="validate">
-              <label for="last_name">Search</label>
-              <button class="waves-effect waves-light btn right purple lighten-1"><i class="material-icons right">search</i>Search</button>
+              <input id="terms" type="text" class="validate">
+              <label for="terms">Search</label>
+              <button class="waves-effect waves-light btn right purple lighten-1" ng-click="search()"><i class="material-icons right">search</i>Search</button>
             </div>
-            <div ng-show="{{documents}}">
-              <div class="input-field" ng-repeat="value in documents">
+            <div>
+              <div class="input-field">
+                <form>
+                  <p>
+                    <div ng-repeat="value in indexedFile">
+                      <input class="with-gap" name="group1" type="radio" id="{{value}}" />
+                      <label for="{{value}}">{{value}}</label>
+                  </p>
+                  </div>
 
-                <input type="checkbox" id="{{'test'+(num+1)}}" />
-                <label for="{{'test'+(num+1)}}">{{value.name}}</label>
+                </form>
 
+                <!--<p class="checkbox" ng-repeat="value in indexedFile">
+                  <input type="checkbox" id="{{value}}" />
+                  <label for="{{value}}">{{value}}</label>
+                </p>-->
               </div>
             </div>
           </div>

@@ -36,8 +36,9 @@ class InvertedIndex {
    * @param {Object} filePath
    * @returns {Object} Returns object containing index
    */
-  createIndex(filePath) {
+  createToIndex(filePath) {
     const wordsToIndex = [];
+    const index = {};
     filePath.forEach((doc) => {
       if (doc.text) {
         wordsToIndex
@@ -47,22 +48,73 @@ class InvertedIndex {
     });
     const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
     uniqueContent.forEach((word) => {
-      this.index[word] = [];
+      index[word] = [];
       wordsToIndex.forEach((document, indexPosition) => {
         if (document.indexOf(word) > -1) {
-          this.index[word].push(indexPosition);
+          index[word].push(indexPosition);
         }
       });
     });
+    this.index = index;
+    return index;
+  }
+
+  createIndex(filename, docToIndex) {
+    // this object stores the index of the current document
+    const newindex = {};
+    const wordsToIndex = [];
+    docToIndex.forEach((document) => {
+      wordsToIndex
+        .push(`${document.title.toLowerCase()} ${document.text
+           .toLowerCase()}`);
+    });
+    const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
+    uniqueContent.forEach((word) => {
+      newindex[word] = [];
+
+      wordsToIndex.forEach((doc, indexPosition) => {
+        if (doc.indexOf(word) > -1) {
+          newindex[word].push(indexPosition);
+        }
+      });
+    });
+    this.index[filename] = newindex;
     return this.index;
   }
 
   /**
    * A method
-   *@returns {Object} Returns object of  an index of createIndex
+   *@returns {Object} Returns object of an index of createIndex
    */
-  getIndex() {
-    return this.index;
+  getIndex(filename) {
+    return this.index[filename];
+  }
+
+  /**
+   * Search index method
+   * @param {String} filename search index
+   * @param {String} query term(s) to search for
+   * @returns {Object} Returns result of searched index.
+   */
+  searchIndex(query, filename) {
+    console.log(this.index);
+    filename = Object.keys(this.index);
+    console.log(filename);
+    this.searchResult = {};
+    this.searchTerms = query.toLowerCase().match(/\w+/g);
+    filename.forEach((current) => {
+      console.log(current);
+      this.searchTerms.forEach((term) => {
+        if (Object.hasOwnProperty.call(this.index[current], term)) {
+          if (term in this.index[current]) {
+            this.searchResult[term] = this.index[current][term];
+          } else {
+            return false;
+          }
+        }
+      });
+    });
+    return this.searchResult;
   }
 
   /**
@@ -98,3 +150,30 @@ class InvertedIndex {
     }
   }
 }
+
+const words = [{
+    "title": "Alice in Wonderland",
+    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+  },
+
+  {
+    "title": "The Lord of the Rings: The Fellowship of the Ring.",
+    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+  }
+]
+
+const newwords = [{
+    title: 'My name is dammy',
+    text: 'Alice falls into a rabbit hole and enters a world full of imagination.'
+  },
+
+  {
+    title: 'The Lord of the Rings: The Fellowship of the Ring and Tola.',
+    text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.'
+  }
+];
+const index = new InvertedIndex();
+index.createIndex('words.json', words);
+index.createIndex('newwords.json', newwords);
+// console.log(index.getIndex('newwords.json'));
+console.log(index.searchIndex('alice a dammy'));

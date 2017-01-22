@@ -33,36 +33,38 @@ const invalidBook = require('../no-title-books.json');
 
 // this is test suite
 describe('Read book data', () => {
-  it('Sould return false for empty json file', () => {
+  it('Should return false for empty json file', () => {
     expect(invertedIndex.validateFile(emptyBook)[0]).toEqual(false);
   });
 
-  it('Sould return true for valid json file', () => {
+  it('Should return true for valid json file', () => {
     expect(invertedIndex.validateFile(validbook)[0]).toEqual(true);
   });
 
-  it('Sould return false for wrong key json file', () => {
+  it('Should return false for wrong key json file', () => {
     expect(invertedIndex.validateFile(invalidBook)[0]).toEqual(false);
   });
 });
 
 describe('Populate Index', () => {
-  it('should ensure that index is created once the file has been read', () => {
-    expect(invertedIndex.createIndex(validbook)).toBeTruthy();
+  it('Should ensure that index is created once the file has been read', () => {
+    expect(invertedIndex.createIndex('books.json', validbook)).toBeDefined();
   });
-  it('should maps the string keys to the correct objects', () => {
-    expect(invertedIndex.getIndex(validbook).alice).toEqual([0]);
+  it('Should maps the string keys to the correct objects', () => {
+    expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
   });
 });
 
 describe('Search Index', () => {
-  it('should return correct index of the search term', () => {
-    expect(invertedIndex.searchIndex('alice'))
-      .toEqual({ 'book.json': { alice: [0] } });
+  // const term = 'alice, a, full [hole, [enter, ring]],';
+  it('Should return correct index of the search term', () => {
+    expect(invertedIndex.searchIndex('alice, a')).toEqual({
+      alice: [0],
+      a: [0, 1]
+    });
   });
-  it('should return false when no result is found', () => {
-    expect(invertedIndex.searchIndex('impossibility'))
-      .toBeFalsy();
+  it('Should return {} when no result is found', () => {
+    expect(invertedIndex.searchIndex('along')).toEqual({});
   });
 });
 

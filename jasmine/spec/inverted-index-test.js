@@ -20,19 +20,22 @@ describe('Read book data', () => {
 
 describe('Populate Index', () => {
   it('Should ensure that index is created once the file has been read', () => {
-    expect(invertedIndex.createIndex(validbook)).toBeTruthy();
+    expect(invertedIndex.createIndex('books.json', validbook)).toBeDefined();
   });
   it('Should maps the string keys to the correct objects', () => {
-    expect(invertedIndex.getIndex(validbook).alice).toEqual([0]);
+    expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
   });
 });
 
 describe('Search Index', () => {
+  // const term = 'alice, a, full [hole, [enter, ring]],';
   it('Should return correct index of the search term', () => {
-    expect(invertedIndex.searchIndex('alice'))
-      .toEqual({ 'book.json': { alice: [0] } });
+    expect(invertedIndex.searchIndex('alice, a')).toEqual({
+      alice: [0],
+      a: [0, 1]
+    });
   });
-  it('Should return false when no result is found', () => {
-    expect(invertedIndex.searchIndex('along')).toBeFalsy();
+  it('Should return {} when no result is found', () => {
+    expect(invertedIndex.searchIndex('along')).toEqual({});
   });
 });
