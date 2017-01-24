@@ -149,31 +149,3 @@ class InvertedIndex {
     }
   }
 }
-
-const words = [{
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
-
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-];
-
-const newwords = [{
-    title: 'My name is dammy',
-    text: 'Alice falls into a rabbit hole and enters a world full of imagination.'
-  },
-
-  {
-    title: 'The Lord of the Rings: The Fellowship of the Ring and Tola.',
-    text: 'An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring.'
-  }
-];
-const index = new InvertedIndex();
-index.createIndex('words.json', words);
-index.createIndex('newwords.json', newwords);
-console.log(index.getIndex());
-console.log(index.getIndex('words.json'));
-// console.log(index.searchIndex('alice [a], @ dammy, tola'));
