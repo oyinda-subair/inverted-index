@@ -28,11 +28,12 @@ describe('Populate Index', () => {
 });
 
 describe('Search Index', () => {
-  // const term = 'alice, a, full [hole, [enter, ring]],';
   it('Should return correct index of the search term', () => {
     expect(invertedIndex.searchIndex('alice, a')).toEqual({
-      alice: [0],
-      a: [0, 1]
+      'books.json': {
+        alice: [0],
+        a: [0, 1]
+      }
     });
   });
   it('Should return {} when no result is found', () => {
