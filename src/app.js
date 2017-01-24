@@ -57,12 +57,15 @@ app.controller('IndexController', ($scope) => {
       $scope.file = $scope.documents[sFileIndex - 1];
       $scope.filename = $scope.file.name;
       $scope.docs = $scope.file.docs;
-      invertedIndex.createIndex($scope.docs);
-      $scope.getty = invertedIndex.getIndex();
+      invertedIndex.createIndex($scope.filename, $scope.docs);
+      $scope.getty = invertedIndex.getIndex($scope.filename);
       $scope.words = $scope.getty;
       if (!$scope.indexedFile.includes($scope.filename.name)) {
         $scope.indexedFile.push($scope.filename);
       }
     }
   };
+  $scope.searchIndex = (search) => {
+
+  }
 });

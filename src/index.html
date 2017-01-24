@@ -98,26 +98,18 @@
           <div class="row">
             <div class="input-field">
               <i class="material-icons prefix">search</i>
-              <input id="terms" type="text" class="validate">
+              <input id="terms" type="text" class="validate" ng-model="search">
               <label for="terms">Search</label>
-              <button class="waves-effect waves-light btn right purple lighten-1" ng-click="search()"><i class="material-icons right">search</i>Search</button>
+              <button class="waves-effect waves-light btn right purple lighten-1" ng-click="searchIndex(search)"><i class="material-icons right">search</i>Search</button>
             </div>
             <div>
               <div class="input-field">
                 <form>
-                  <p>
-                    <div ng-repeat="value in indexedFile">
-                      <input class="with-gap" name="group1" type="radio" id="{{value}}" />
-                      <label for="{{value}}">{{value}}</label>
+                  <p class="checkbox" ng-repeat="value in indexedFile">
+                    <input type="checkbox" id="{{value}}" />
+                    <label for="{{value}}">{{value}}</label>
                   </p>
-                  </div>
-
                 </form>
-
-                <!--<p class="checkbox" ng-repeat="value in indexedFile">
-                  <input type="checkbox" id="{{value}}" />
-                  <label for="{{value}}">{{value}}</label>
-                </p>-->
               </div>
             </div>
           </div>
