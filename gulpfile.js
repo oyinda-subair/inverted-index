@@ -29,24 +29,14 @@ gulp.task('browser-sync', () => {
   });
 });
 
-
-/**
- * run the Karma server once with the given config file path.
- * @param {String} configFile karma.conf.js.
- * @param {String} cb config.
- */
-
-function runKarma(configFile, cb) {
+gulp.task('karma', ['scripts'], (done) => {
   karma.start({
-    singleRun: true,
-    configFile: path.resolve(configFile)
-  }, cb);
-}
-
-gulp.task('test', (cb) => {
-  runKarma('karma.conf.js', cb);
+    configFile: path.resolve('karma.conf.js'),
+    singleRun: true
+  }, () => {
+    done();
+  });
 });
-
 
 gulp.task('watch', ['browser-sync'], () => {
   gulp.watch('*.js', ['reload']);
@@ -57,3 +47,5 @@ gulp.task('watch', ['browser-sync'], () => {
 
 // create a default task and just log a message
 gulp.task('default', ['browser-sync', 'scripts', 'watch'], () => {});
+
+gulp.task('test', ['karma']);
