@@ -3,7 +3,6 @@
 // grab our gulp packages
 const gulp = require('gulp');
 const bs = require('browser-sync').create();
-const bsync = require('browser-sync').create();
 const path = require('path');
 const karma = require('karma').Server;
 const browserify = require('gulp-browserify');
@@ -19,13 +18,13 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('browser-sync', () => {
-  bsync.init({
+  bs.init({
     server: {
       baseDir: 'src',
       index: 'index.html'
     },
-    port: 8080
-
+    port: 8080,
+    ghostMode: false
   });
 });
 
@@ -39,13 +38,13 @@ gulp.task('karma', ['scripts'], (done) => {
 });
 
 gulp.task('watch', ['browser-sync'], () => {
-  gulp.watch('*.js', ['reload']);
-  gulp.watch('css/*.css', ['reload']);
-  gulp.watch('*.html').on('change', reload);
+  gulp.watch('src/*.js', reload);
+  gulp.watch('src/css/*.css', reload);
+  gulp.watch('src/*.html').on('change', reload);
   gulp.watch('jasmine/spec/inverted-index-test.js');
 });
 
 // create a default task and just log a message
 gulp.task('default', ['browser-sync', 'scripts', 'watch'], () => {});
 
-gulp.task('test', ['karma']);
+gulp.task('test', ['scripts', 'karma']);
