@@ -23,7 +23,7 @@ gulp.task('browser-sync', () => {
       baseDir: 'src',
       index: 'index.html'
     },
-    port: 8080,
+    port: process.env.PORT || 8080,
     ghostMode: false
   });
 });

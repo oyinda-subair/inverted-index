@@ -42,9 +42,7 @@ class InvertedIndex {
    * @returns {Object} Returns object containing index
    */
   createIndex(fileName, docToIndex) {
-    // this object stores the index of the current document
     const newindex = {};
-    // hole the combinations of document title and text
     const wordsToIndex = [];
     docToIndex.forEach((document) => {
       wordsToIndex
