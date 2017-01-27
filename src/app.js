@@ -1,14 +1,11 @@
-// (function () {
-
-// }());
-
 const app = angular.module('myApp', []);
 app.controller('IndexController', ($scope) => {
   const invertedIndex = new InvertedIndex();
-  // $scope.files = [];
   $scope.documents = [];
   let details = {};
   $scope.indexedFile = [];
+  $scope.checkedBox = [];
+  // $scope.searchResult = [];
   $scope.uploadFile = () => {
     const files = document.getElementById('files').files;
     for (let il = 0; il < files.length; il += 1) {
@@ -32,12 +29,11 @@ app.controller('IndexController', ($scope) => {
               docs: jsonFile
             };
             $scope.$apply(() => {
-              // if (!$scope.indexedFile.includes(details.name)) {
-
-              // }
-              $scope.documents.push(details);
-              $scope.indexShow = true;
-              $scope.message = secValue;
+              if (!$scope.documents.includes(details.name)) {
+                $scope.documents.push(details);
+                $scope.indexShow = true;
+                $scope.message = secValue;
+              }
             });
           }
         };
@@ -60,12 +56,39 @@ app.controller('IndexController', ($scope) => {
       invertedIndex.createIndex($scope.filename, $scope.docs);
       $scope.getty = invertedIndex.getIndex($scope.filename);
       $scope.words = $scope.getty;
-      if (!$scope.indexedFile.includes($scope.filename.name)) {
+      if (!$scope.indexedFile.includes($scope.filename)) {
         $scope.indexedFile.push($scope.filename);
+      }
+      $scope.message = '';
+    }
+  };
+
+  $scope.checked = (key) => {
+    if ($scope.checkedBox.includes(key)) {
+      $scope.checkedBox.splice($scope.checkedBox.indexOf(key), 1);
+    } else {
+      $scope.checkedBox.push(key);
+    }
+  };
+
+  $scope.docsInFile = (filename) => {
+    for (let xl = 0; xl <= $scope.documents.length; xl += 1) {
+      if ($scope.documents[xl].name === filename) {
+        return $scope.documents[xl].docs;
       }
     }
   };
-  $scope.searchIndex = (search) => {
 
-  }
+  $scope.searchIndex = () => {
+    console.log($scope.search);
+    const checklength = $scope.checkedBox.length;
+    if (checklength > 0) {
+      $scope.searchResult =
+        invertedIndex.searchIndex($scope.search, $scope.checkedBox);
+    } else {
+      $scope.searchResult = invertedIndex.searchIndex($scope.search);
+    }
+    // $scope.searchResult.push($scope.result);
+    console.log($scope.searchResult);
+  };
 });

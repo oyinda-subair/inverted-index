@@ -9,6 +9,7 @@
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -17,107 +18,132 @@
       <a href="#" class="brand-logo center">Inverted Index</a>
     </div>
   </nav>
-  <div ng-controller="IndexController">
-    <div class="row">
-      <div class="col s12 .green.lighten-3 ">
-      </div>
-    </div>
-    <!-- Page Content goes here -->
-    <div class="row">
-      <div class="col s6">
-        <form class="col s12">
-          <div class="row">
-            <div class="file-field input-field col s12">
-              <div class="btn waves-effect waves-light purple lighten-1">
-                <span>Browse</span>
-                <input type="file" id="files" name="files[]" multiple>
+  <main>
+    <div ng-controller="IndexController">
+      <!-- Page Content goes here -->
+      <div class="row">
+        <div class="col s6">
+          <form class="col s12">
+            <div class="row">
+              <div class="file-field input-field col s12">
+                <div class="btn waves-effect waves-light purple lighten-1">
+                  <span>Browse</span>
+                  <input type="file" id="files" name="files[]" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                </div>
               </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Upload one or more files">
+              <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
+            </div>
+            <div class="row" ng-hide="{{showMessage}}">
+              <div class="col s12">
+                <p class="red-text">{{message}}</p>
               </div>
             </div>
-            <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
-          </div>
-          <div class="row" ng-hide="{{showMessage}}">
-            <div class="col s12">
-              <p class="red-text">{{message}}</p>
-            </div>
-          </div>
-          <div class="row">
-            <label>Upload then select a file to create index</label>
-            <select class="browser-default" id="uploadedFiles">
+            <div class="row">
+              <select class="browser-default" id="uploadedFiles" ng-if="documents.length">
               <option ng-if="!documents.length" disabled selected>Upload a file</option>
               <option value="" ng-if="documents.length" disabled selected>Choose your file</option>
               <option value="{{value}}" ng-repeat="value in documents">{{value.name}}</option>
             </select>
-            <div class="input-field col s12">
-              <div ng-if="documents.length">
-                <button class="btn purple right lighten-1" ng-click="indexFile()">Create Index</button>
+              <div class="input-field col s12">
+                <div ng-if="documents.length">
+                  <button class="btn purple right lighten-1" ng-click="indexFile()">Create Index</button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row">
-            {{filename}}
-            <table class="striped">
-              <thead>
-                <tr>
-                  <th>Term</th>
-                  <th ng-repeat="(keys, value) in docs track by $index">{{'Doc_'+(keys+1)}}</th>
-                </tr>
-              </thead>
+            <div class="row">
+              <table class="striped">
+                <thead>
+                  <tr>
+                    <th>{{filename}}</th>
+                    <th ng-repeat="(keys, value) in docs track by $index">{{value.title}}</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr ng-repeat="(key, val) in words track by $index">
-                  <td>{{key}}</td>
-                  <td ng-repeat="(word, value) in docs track by $index">
-                    <i class="material-icons teal-text" ng-if="words[key].includes(word)">
+                <tbody>
+                  <tr ng-repeat="(key, val) in words track by $index">
+                    <td>{{key}}</td>
+                    <td ng-repeat="(word, value) in docs track by $index">
+                      <i class="material-icons teal-text" ng-if="words[key].includes(word)">
                       check
                     </i>
-                    <i class="material-icons red-text" ng-if="!words[key].includes(word)">
+                      <i class="material-icons red-text" ng-if="!words[key].includes(word)">
                       close
                     </i>
-                  </td>
-                  </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!--<ul class="collapsible popout" data-collapsible="accordion">
-              <li ng-repeat="file in indexedFile">
-                <div class="collapsible-header"><i class="material-icons">label_outline</i>{{file}}</div>
-                <div class="collapsible-body">
-                </div>
-              </li>
-            </ul>-->
-          </div>
-        </form>
-      </div>
-
-      <div class="col s6">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field">
-              <i class="material-icons prefix">search</i>
-              <input id="terms" type="text" class="validate" ng-model="search">
-              <label for="terms">Search</label>
-              <button class="waves-effect waves-light btn right purple lighten-1" ng-click="searchIndex(search)"><i class="material-icons right">search</i>Search</button>
+                    </td>
+                    </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
             </div>
-            <div>
+          </form>
+        </div>
+
+        <div class="col s6">
+          <form class="col s12">
+            <div class="row">
               <div class="input-field">
+                <i class="material-icons prefix">search</i>
+                <input id="terms" type="text" class="validate" ng-model="search">
+                <label for="terms">Search</label>
+              </div>
+              <div>
                 <form>
-                  <p class="checkbox" ng-repeat="value in indexedFile">
-                    <input type="checkbox" id="{{value}}" />
-                    <label for="{{value}}">{{value}}</label>
-                  </p>
+                  <span ng-repeat="(key, val) in indexedFile track by $index" ng-if="indexedFile.length">
+                    <input type="checkbox" id="{{val}}" ng-click="checked(val)" />
+                    <label for="{{val}}">{{val}}</label>
+                  </span>
                 </form>
+                <div class="row" ng-hide="{{searchMessage}}">
+                  <div class="col s12">
+                    <p class="red-text">{{searchMsg}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="input-field">
+                <button class="waves-effect waves-light btn right purple lighten-1" ng-click="searchIndex()"><i class="material-icons right">search</i>Search</button>
               </div>
             </div>
-          </div>
-        </form>
+            <div class="col s12" ng-repeat="(key,val) in searchResult">
+              <table class="bordered">
+                <thead>
+                  <tr>
+                    <th>{{key}}</th>
+                    <th ng-repeat="value in docsInFile(key)">{{value.title}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="(keys, values) in val">
+                    <td>{{keys}}</td>
+                    <td ng-repeat="(word, value) in docsInFile(key)">
+                      <i class="material-icons teal-text" ng-if="val[keys].includes(word)">
+                      check
+                    </i>
+                      <i class="material-icons red-text" ng-if="!val[keys].includes(word)">
+                      close
+                    </i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+              <br>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 
-  </div>
+  </main>
+  <footer>
+    <nav class="purple darken-3">
+      <p>&copy; Subair Oyindamola</p>
+    </nav>
+  </footer>
   <!-- Scripts -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/materialize.min.js"></script>

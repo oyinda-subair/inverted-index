@@ -44,9 +44,15 @@ describe('Search Index', () => {
       }
     });
   });
-  it('Should return books.json:{} when no result is found', () => {
-    expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({ 'books.json': {} });
-  });
+  it('Should return books.json:{along: undefined } when no result is found',
+    () => {
+      expect(invertedIndex.searchIndex('along',
+        invertedIndex.getIndex()[0])).toEqual({
+        'books.json': {
+          along: undefined
+        }
+      });
+    });
   it('Should return correct index in an array search terms', () => {
     expect(invertedIndex.searchIndex('alice, [hole,[a]]')).toEqual({
       'books.json': {

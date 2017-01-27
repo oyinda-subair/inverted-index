@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: "off"*/
+
 /**
  * An inverted index class.
  * @class
@@ -7,6 +9,7 @@ class InvertedIndex {
    * @constructor
    */
   constructor() {
+    // stores all created index
     this.index = {};
   }
 
@@ -27,41 +30,21 @@ class InvertedIndex {
    */
   static distinctWords(words) {
     const tokens = InvertedIndex.tokenize(words);
+    // remove multile words
     return tokens.filter((item, index) =>
       tokens.indexOf(item) === index);
   }
 
   /**
    * A method to create index
-   * @param {Object} filePath
+   * @param {Object} fileName
+   * @param {Object} docToIndex
    * @returns {Object} Returns object containing index
    */
-  createToIndex(filePath) {
-    const wordsToIndex = [];
-    const index = {};
-    filePath.forEach((doc) => {
-      if (doc.text) {
-        wordsToIndex
-          .push(`${doc.title.toLowerCase()} ${doc.text
-           .toLowerCase()}`);
-      }
-    });
-    const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
-    uniqueContent.forEach((word) => {
-      index[word] = [];
-      wordsToIndex.forEach((document, indexPosition) => {
-        if (document.indexOf(word) > -1) {
-          index[word].push(indexPosition);
-        }
-      });
-    });
-    this.index = index;
-    return index;
-  }
-
-  createIndex(filename, docToIndex) {
+  createIndex(fileName, docToIndex) {
     // this object stores the index of the current document
     const newindex = {};
+    // hole the combinations of document title and text
     const wordsToIndex = [];
     docToIndex.forEach((document) => {
       wordsToIndex
@@ -78,38 +61,39 @@ class InvertedIndex {
         }
       });
     });
-    this.index[filename] = newindex;
+    this.index[fileName] = newindex;
     return this.index;
   }
 
   /**
    * A method
+   * @param {String} fileName
    *@returns {Object} Returns object of an index of createIndex
    */
-  getIndex(filename) {
-    if (filename === undefined) {
+  getIndex(fileName) {
+    if (fileName === undefined) {
       return this.index;
     }
-    return this.index[filename];
+    return this.index[fileName];
   }
 
   /**
    * Search index method
-   * @param {String} filename search index
-   * @param {String} query term(s) to search for
+   * @param {String} query
+   * @param {String} fileName term(s) to search for
    * @returns {Object} Returns result of searched index.
    */
-  searchIndex(query, filename) {
-    filename = filename || Object.keys(this.index);
+  searchIndex(query, fileName) {
+    fileName = fileName || Object.keys(this.index);
     this.searchResult = {};
     this.searchTerms = query.toLowerCase().match(/\w+/g);
-    filename.forEach((current) => {
+    fileName.forEach((current) => {
       this.searchResult[current] = {};
       this.searchTerms.forEach((term) => {
         if (term in this.index[current]) {
           this.searchResult[current][term] = this.index[current][term];
         } else {
-          this.searchResult = {};
+          this.searchResult[current][term] = this.index[current][term];
         }
       });
     });
@@ -123,28 +107,23 @@ class InvertedIndex {
    */
   validateFile(file) {
     if (typeof file !== 'object' || file.length === 0) {
-      return [false, 'File is empty please a new file'];
+      return [false, 'File is empty upload please a new file'];
     }
 
     try {
       this.jsonFile = file;
       let check = true;
       this.jsonFile.forEach((key) => {
-        if (key.title !== undefined && file.text !== undefined) {
-          check = false;
-        }
-        if (key.title === undefined && file.text === undefined) {
+        if (key.title === undefined || key.text === undefined) {
           check = false;
         }
       });
       if (!check) {
-        return [false, 'Invalid File Content'];
+        const error = new Error('Invalid Content');
+        throw error;
       }
       return [true, 'File Uploaded Successfully'];
-    } catch (err) {
-      if (err instanceof SyntaxError) {
-        return [false, 'syntax error'];
-      }
+    } catch (error) {
       return [false, 'Invalid File Content'];
     }
   }
