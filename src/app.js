@@ -5,7 +5,8 @@ app.controller('IndexController', ($scope) => {
   let details = {};
   $scope.indexedFile = [];
   $scope.checkedBox = [];
-  // $scope.searchResult = [];
+  $scope.showMessage = false;
+  $scope.showIndexTable = false;
   $scope.uploadFile = () => {
     const files = document.getElementById('files').files;
     for (let il = 0; il < files.length; il += 1) {
