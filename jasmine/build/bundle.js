@@ -49,7 +49,7 @@ describe('Read book data', () => {
     expect(invertedIndex.validateFile(invalidBook)[0]).toEqual(false);
   });
   const result = 'File is empty upload please a new file';
-  it(`Should return ${result} for wrong key json file`, () => {
+  it(`Should return ${result} for empty json file`, () => {
     expect(invertedIndex.validateFile(nocontent)[1]).toEqual(result);
   });
 });
