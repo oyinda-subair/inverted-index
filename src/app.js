@@ -82,8 +82,8 @@ app.controller('IndexController', ($scope) => {
   };
 
   $scope.searchIndex = () => {
-    const checklength = $scope.checkedBox.length;
-    if (checklength > 0) {
+    const checked = $scope.checkedBox.length;
+    if (checked > 0) {
       $scope.searchResult =
         invertedIndex.searchIndex($scope.search, $scope.checkedBox);
     } else {
