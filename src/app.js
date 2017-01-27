@@ -45,6 +45,7 @@ app.controller('IndexController', ($scope) => {
   };
 
   $scope.indexFile = () => {
+    $scope.showIndexTable = true;
     const selectedFile = document.getElementById('uploadedFiles');
     const sFileIndex = selectedFile.selectedIndex;
     if (sFileIndex === -1) {
