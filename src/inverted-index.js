@@ -83,46 +83,45 @@ class InvertedIndex {
    */
   searchIndex(query, fileName) {
     fileName = fileName || Object.keys(this.index);
-    this.searchResult = {};
-    this.searchTerms = query.toLowerCase().match(/\w+/g);
+    const searchResult = {};
+    const searchTerms = query.toLowerCase().match(/\w+/g);
     fileName.forEach((current) => {
-      this.searchResult[current] = {};
-      this.searchTerms.forEach((term) => {
+      searchResult[current] = {};
+      searchTerms.forEach((term) => {
         if (term in this.index[current]) {
-          this.searchResult[current][term] = this.index[current][term];
-        } else {
-          this.searchResult[current][term] = this.index[current][term];
+          searchResult[current][term] = this.index[current][term];
         }
       });
     });
-    return this.searchResult;
+    return searchResult;
   }
 
   /**
-   * A method to validate json file
-   * @param {String} file
+   * validateFile a method to validate json file
+   * @param {Object} file
    * @returns {Array} Returns boolean and a message.
    */
   validateFile(file) {
-    if (typeof file !== 'object' || file.length === 0) {
-      return [false, 'File is empty upload please a new file'];
-    }
+    this.file = file;
+    const jsonFile = this.file;
+    let check = true;
 
     try {
-      this.jsonFile = file;
-      let check = true;
-      this.jsonFile.forEach((key) => {
+      if (typeof file !== 'object' || file.length === 0) {
+        return { status: false, msg: 'File is empty upload please a new file' };
+      }
+      jsonFile.forEach((key) => {
         if (key.title === undefined || key.text === undefined) {
           check = false;
         }
       });
+
       if (!check) {
-        const error = new Error('Invalid Content');
-        throw error;
+        throw new Error('Invalid File Content');
       }
-      return [true, 'File Uploaded Successfully'];
+      return { status: true, msg: 'File Uploaded Successfully' };
     } catch (error) {
-      return [false, 'Invalid File Content'];
+      return { status: false, msg: 'Invalid File Content' };
     }
   }
 }

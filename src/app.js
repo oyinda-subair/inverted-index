@@ -7,6 +7,7 @@ app.controller('IndexController', ($scope) => {
   $scope.checkedBox = [];
   $scope.showMessage = false;
   $scope.showIndexTable = false;
+  $scope.showSearch = false;
   $scope.uploadFile = () => {
     const files = document.getElementById('files').files;
     for (let il = 0; il < files.length; il += 1) {
@@ -16,8 +17,8 @@ app.controller('IndexController', ($scope) => {
         reader.onload = (e) => {
           const fileDetails = e.target.result;
           const validate = invertedIndex.validateFile(JSON.parse(fileDetails));
-          const firstValue = validate[0];
-          const secValue = validate[1];
+          const firstValue = validate.status;
+          const secValue = validate.msg;
           if (!firstValue) {
             $scope.$apply(() => {
               $scope.message = secValue;
@@ -25,12 +26,13 @@ app.controller('IndexController', ($scope) => {
             });
           } else {
             const jsonFile = JSON.parse(fileDetails);
+
             details = {
               name: file.name,
               docs: jsonFile
             };
             $scope.$apply(() => {
-              if (!$scope.documents.includes(details.name)) {
+              if (!scope.documents.includes(details.name)) {
                 $scope.documents.push(details);
                 $scope.indexShow = true;
                 $scope.message = secValue;
@@ -45,6 +47,7 @@ app.controller('IndexController', ($scope) => {
     }
   };
 
+  // create index click function.
   $scope.indexFile = () => {
     $scope.showIndexTable = true;
     const selectedFile = document.getElementById('uploadedFiles');
@@ -52,19 +55,29 @@ app.controller('IndexController', ($scope) => {
     if (sFileIndex === -1) {
       $scope.message = 'Please upload a file';
     } else {
-      $scope.file = $scope.documents[sFileIndex - 1];
+      const value = selectedFile[sFileIndex].value;
+      $scope.file = $scope.documents[value];
       $scope.filename = $scope.file.name;
       $scope.docs = $scope.file.docs;
       invertedIndex.createIndex($scope.filename, $scope.docs);
-      $scope.getty = invertedIndex.getIndex($scope.filename);
-      $scope.words = $scope.getty;
       if (!$scope.indexedFile.includes($scope.filename)) {
         $scope.indexedFile.push($scope.filename);
+        $scope.showMessage = false;
+      } else {
+        $scope.showMessage = true;
+        $scope.message = 'Multiple File Upload: File has already been indexed';
       }
-      $scope.message = '';
+      $scope.showSearch = true;
     }
   };
 
+  // get index of a specific file
+  $scope.words = (filename) => {
+    $scope.getty = invertedIndex.getIndex(filename);
+    return $scope.getty;
+  };
+
+  // checkbox click function
   $scope.checked = (key) => {
     if ($scope.checkedBox.includes(key)) {
       $scope.checkedBox.splice($scope.checkedBox.indexOf(key), 1);
@@ -81,6 +94,7 @@ app.controller('IndexController', ($scope) => {
     }
   };
 
+  // search button click function
   $scope.searchIndex = () => {
     const checked = $scope.checkedBox.length;
     if (checked > 0) {

@@ -23,7 +23,7 @@
       <!-- Page Content goes here -->
       <div class="row">
         <div class="col s6">
-          <form class="col s12">
+          <form>
             <div class="row">
               <div class="file-field input-field col s12">
                 <div class="btn waves-effect waves-light purple lighten-1">
@@ -31,12 +31,12 @@
                   <input type="file" id="files" name="files[]" multiple>
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Upload one or more files">
+                  <input class="file-path validate" type="text" placeholder="Upload one or more files" readonly>
                 </div>
               </div>
               <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
             </div>
-            <div class="row" ng-show="{{showMessage}}">
+            <div class="row" ng-if="showMessage">
               <div class="col s12">
                 <p class="red-text">{{message}}</p>
               </div>
@@ -45,7 +45,7 @@
               <select class="browser-default" id="uploadedFiles" ng-if="documents.length">
               <option ng-if="!documents.length" disabled selected>Upload a file</option>
               <option value="" ng-if="documents.length" disabled selected>Choose your file</option>
-              <option value="{{value}}" ng-repeat="value in documents">{{value.name}}</option>
+              <option value="{{key}}" ng-repeat="(key, value) in documents">{{value.name}}</option>
             </select>
               <div class="input-field col s12">
                 <div ng-if="documents.length">
@@ -53,32 +53,38 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <table class="bordered" ng-show="showIndexTable">
-                <thead>
-                  <tr>
-                    <th>{{filename}}</th>
-                    <th ng-repeat="(keys, value) in docs track by $index">{{value.title}}</th>
-                  </tr>
-                </thead>
+            <div class="row" ng-show="showIndexTable">
+              <ul class="collapsible popout" data-collapsible="accordion">
+                <li ng-repeat="value in indexedFile">
+                  <div class="collapsible-header"><i class="material-icons">arrow_drop_down_circle</i>{{value}}</div>
+                  <div class="collapsible-body white">
+                    <table class="striped">
+                      <thead>
+                        <tr>
+                          <th>Words</th>
+                          <th ng-repeat="(keys, val) in docsInFile(value)">{{val.title}}
+                          </th>
+                        </tr>
+                      </thead>
 
-                <tbody>
-                  <tr ng-repeat="(key, val) in words track by $index">
-                    <td>{{key}}</td>
-                    <td ng-repeat="(word, value) in docs track by $index">
-                      <i class="material-icons teal-text" ng-if="words[key].includes(word)">
+                      <tbody>
+                        <tr ng-repeat="(key, val) in words(value)">
+                          <td>{{key}}</td>
+                          <td ng-repeat="(word, vals) in docsInFile(value)">
+                            <i class="material-icons teal-text" ng-if="val.includes(word)">
                       check
                     </i>
-                      <i class="material-icons red-text" ng-if="!words[key].includes(word)">
+                            <i class="material-icons red-text" ng-if="!val.includes(word)">
                       close
                     </i>
-                    </td>
-                    </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <br/>
+                          </td>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </li>
+              </ul>
             </div>
           </form>
         </div>
@@ -91,20 +97,20 @@
                 <input id="terms" type="text" class="validate" ng-model="search">
                 <label for="terms">Search</label>
               </div>
-              <div>
+              <div ng-if="showSearch">
                 <form>
                   <span ng-repeat="(key, val) in indexedFile track by $index" ng-if="indexedFile.length">
                     <input type="checkbox" id="{{val}}" ng-click="checked(val)" />
                     <label for="{{val}}">{{val}}</label>
                   </span>
                 </form>
-                <div class="row" ng-hide="{{searchMessage}}">
+                <div class="row" ng-if="searchMessage">
                   <div class="col s12">
                     <p class="red-text">{{searchMsg}}</p>
                   </div>
                 </div>
               </div>
-              <div class="input-field">
+              <div class="input-field" ng-if="showSearch">
                 <button class="waves-effect waves-light btn right purple lighten-1" ng-click="searchIndex()"><i class="material-icons right">search</i>Search</button>
               </div>
             </div>
@@ -140,7 +146,7 @@
 
   </main>
   <footer>
-    <nav class="purple darken-3">
+    <nav class="purple darken-3 center">
       <p>&copy; Subair Oyindamola</p>
     </nav>
   </footer>

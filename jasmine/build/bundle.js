@@ -38,19 +38,19 @@ const nocontent = require('../empty.json');
 // this is test suite
 describe('Read book data', () => {
   it('Should return false for empty json file', () => {
-    expect(invertedIndex.validateFile(emptyBook)[0]).toEqual(false);
+    expect(invertedIndex.validateFile(emptyBook).status).toEqual(false);
   });
 
   it('Should return true for valid json file', () => {
-    expect(invertedIndex.validateFile(validbook)[0]).toEqual(true);
+    expect(invertedIndex.validateFile(validbook).status).toEqual(true);
   });
 
   it('Should return false if json does not contain title abd text', () => {
-    expect(invertedIndex.validateFile(invalidBook)[0]).toEqual(false);
+    expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
   });
   const result = 'File is empty upload please a new file';
   it(`Should return ${result} for empty json file`, () => {
-    expect(invertedIndex.validateFile(nocontent)[1]).toEqual(result);
+    expect(invertedIndex.validateFile(nocontent).msg).toEqual(result);
   });
 });
 
@@ -61,9 +61,10 @@ describe('Populate Index', () => {
   it('Should maps the string keys to the correct objects', () => {
     expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
   });
-  it('Should maps the string keys to the correct objects', () => {
-    expect(invertedIndex.getIndex()).toBeDefined();
-  });
+  it('Should return an object that is an accurate index of the content of the json file',
+    () => {
+      expect(invertedIndex.getIndex()).toBeDefined();
+    });
 });
 
 describe('Search Index', () => {
@@ -75,13 +76,10 @@ describe('Search Index', () => {
       }
     });
   });
-  it('Should return books.json:{along: undefined } when no result is found',
+  it('Should return books.json:{} when no result is found',
     () => {
-      expect(invertedIndex.searchIndex('along',
-        invertedIndex.getIndex()[0])).toEqual({
-        'books.json': {
-          along: undefined
-        }
+      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
+        'books.json': {}
       });
     });
   it('Should return correct index in an array search terms', () => {
