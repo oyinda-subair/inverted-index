@@ -65,7 +65,7 @@ app.controller('IndexController', ($scope) => {
         $scope.showMessage = false;
       } else {
         $scope.showMessage = true;
-        $scope.message = 'Multiple File Upload: File has already been indexed';
+        $scope.message = 'File has already been indexed';
       }
       $scope.showSearch = true;
     }

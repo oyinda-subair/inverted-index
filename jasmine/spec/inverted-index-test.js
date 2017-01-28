@@ -17,7 +17,7 @@ describe('Read book data', () => {
   it('Should return false if json does not contain title abd text', () => {
     expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
   });
-  const result = 'File is empty upload please a new file';
+  const result = 'File is empty please upload a new file';
   it(`Should return ${result} for empty json file`, () => {
     expect(invertedIndex.validateFile(nocontent).msg).toEqual(result);
   });
