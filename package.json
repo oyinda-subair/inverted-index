@@ -1,0 +1,71 @@
+{
+  "name": "inverted-index",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test",
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andela-osubair/inverted-index.git"
+  },
+  "author": "Subair O.A",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andela-osubair/inverted-index/issues"
+  },
+  "homepage": "https://github.com/andela-osubair/inverted-index#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.6",
+    "browserify": "^13.3.0",
+    "browserify-shim": "^3.8.12",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-run": "^1.7.1",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-verbose-reporter": "0.0.4",
+    "watchify": "^3.8.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.1",
+    "browser-sync": "^2.18.6",
+    "browserify": "^13.3.0",
+    "browserify-shim": "^3.8.13",
+    "coveralls": "^2.11.15",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.9.0",
+    "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
+    "gulp-rename": "^1.2.2",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.4.0",
+    "karma-coverage": "^1.1.1",
+    "karma-coveralls": "^1.1.2",
+    "karma-jasmine": "^1.1.0",
+    "karma-verbose-reporter": "0.0.4"
+  }
+}
