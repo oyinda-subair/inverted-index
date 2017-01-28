@@ -44,12 +44,15 @@ class InvertedIndex {
   createIndex(fileName, docToIndex) {
     const newindex = {};
     const wordsToIndex = [];
+
     docToIndex.forEach((document) => {
       wordsToIndex
         .push(`${document.title.toLowerCase()} ${document.text
            .toLowerCase()}`);
     });
+
     const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
+
     uniqueContent.forEach((word) => {
       newindex[word] = [];
 
