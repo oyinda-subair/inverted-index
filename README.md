@@ -1,5 +1,6 @@
-[![Coverage Status](https://coveralls.io/repos/github/andela-osubair/inverted-index/badge.svg?branch=staging)](https://coveralls.io/github/andela-osubair/inverted-index?branch=staging)
 [![Build Status](https://travis-ci.org/andela-osubair/inverted-index.svg?branch=master)](https://travis-ci.org/andela-osubair/inverted-index)
+[![Coverage Status](https://coveralls.io/repos/github/andela-osubair/inverted-index/badge.svg?branch=master)](https://coveralls.io/github/andela-osubair/inverted-index?branch=master)
+[![Code Climate](https://codeclimate.com/repos/588b4c0ad0bce13ce800025a/badges/331e9b4dfb5ba2eebc39/gpa.svg)](https://codeclimate.com/repos/588b4c0ad0bce13ce800025a/feed)
 # Inverted Index
 
 An application that creates an Index from a JSON array of one or more text objects , it is designed to allow very fast full-text searches.

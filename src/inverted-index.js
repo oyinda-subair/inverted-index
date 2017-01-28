@@ -111,7 +111,7 @@ class InvertedIndex {
 
     try {
       if (typeof file !== 'object' || file.length === 0) {
-        return { status: false, msg: 'File is empty upload please a new file' };
+        return { status: false, msg: 'File is empty please upload a new file' };
       }
       jsonFile.forEach((key) => {
         if (key.title === undefined || key.text === undefined) {
