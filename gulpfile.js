@@ -36,7 +36,7 @@ gulp.task('browserTest', () => {
       baseDir: ['./src', './jasmine'],
       index: 'SpecRunner.html'
     },
-    port: process.env.PORT || 8888,
+    port: 8888,
     ui: false,
     ghostMode: false,
     open: false
