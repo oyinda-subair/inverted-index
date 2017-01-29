@@ -32,7 +32,7 @@ app.controller('IndexController', ($scope) => {
               docs: jsonFile
             };
             $scope.$apply(() => {
-              if (!scope.documents.includes(details.name)) {
+              if (!$scope.documents.includes(details.name)) {
                 $scope.documents.push(details);
                 $scope.indexShow = true;
                 $scope.message = secValue;
