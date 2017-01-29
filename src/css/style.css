@@ -8,7 +8,7 @@ body {
 
 main {
     flex: 1 0 auto;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 table {
@@ -18,4 +18,10 @@ table {
 .collapsible-body {
     max-height: 400px;
     overflow: auto;
+}
+
+.help,
+footer.nav {
+    position: absolute;
+    bottom: 0;
 }
