@@ -14,4 +14,7 @@ engines:
 ratings:
   paths:
   - src/*.js
-exclude_paths: []
+exclude_paths:
+- src/js/*.js
+- jsamine/build/
+- gulpfile.js
