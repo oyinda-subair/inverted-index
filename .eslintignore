@@ -3,3 +3,4 @@ node_modules
 .vscode
 karma.conf.js
 jasmine/build
+src/js/
