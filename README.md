@@ -48,5 +48,5 @@ An application that creates an Index from a JSON array of one or more text objec
   * Materialize CSS
   * AngularJS
 
-## Limitaions
+## Limitations
   * Only files with `.json` extension can be indexed
