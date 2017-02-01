@@ -1,11 +1,12 @@
-const app = angular.module('myApp', []);
-app.controller('IndexController', ($scope) => {
+const app = angular.module('myApp', ['toastr']);
+app.controller('IndexController', ($scope, toastr) => {
   const invertedIndex = new InvertedIndex();
   $scope.documents = [];
+  $scope.filenames = [];
   let details = {};
   $scope.indexedFile = [];
   $scope.checkedBox = [];
-  $scope.showMessage = false;
+  $scope.showUploaded = false;
   $scope.showIndexTable = false;
   $scope.showSearch = false;
   $scope.uploadFile = () => {
@@ -14,16 +15,18 @@ app.controller('IndexController', ($scope) => {
       const file = files[il];
       if (/application\/json/.test(file.type)) {
         const reader = new FileReader();
+        if ($scope.filenames.includes(file.name)) {
+          toastr.error(`${file.name} has already been uploaded`);
+          return;
+        }
+        reader.readAsText(file);
         reader.onload = (e) => {
           const fileDetails = e.target.result;
           const validate = invertedIndex.validateFile(JSON.parse(fileDetails));
           const firstValue = validate.status;
           const secValue = validate.msg;
           if (!firstValue) {
-            $scope.$apply(() => {
-              $scope.message = secValue;
-              $scope.showMessage = true;
-            });
+            toastr.error(secValue, Error);
           } else {
             const jsonFile = JSON.parse(fileDetails);
 
@@ -31,18 +34,15 @@ app.controller('IndexController', ($scope) => {
               name: file.name,
               docs: jsonFile
             };
-            $scope.$apply(() => {
-              if (!$scope.documents.includes(details.name)) {
-                $scope.documents.push(details);
-                $scope.indexShow = true;
-                $scope.message = secValue;
-              }
-            });
+            $scope.documents.push(details);
+            $scope.filenames.push(details.name);
+            $scope.showUploaded = true;
+            $scope.showSearch = true;
+            toastr.success(`${file.name} ${secValue}`);
           }
         };
-        reader.readAsText(file);
       } else {
-        $scope.message = 'Invalid File Type';
+        toastr.error('Invalid File Type', Error);
       }
     }
   };
@@ -53,7 +53,7 @@ app.controller('IndexController', ($scope) => {
     const selectedFile = document.getElementById('uploadedFiles');
     const sFileIndex = selectedFile.selectedIndex;
     if (sFileIndex === -1) {
-      $scope.message = 'Please upload a file';
+      toastr.error('Please upload a file');
     } else {
       const value = selectedFile[sFileIndex].value;
       $scope.file = $scope.documents[value];
@@ -62,12 +62,9 @@ app.controller('IndexController', ($scope) => {
       invertedIndex.createIndex($scope.filename, $scope.docs);
       if (!$scope.indexedFile.includes($scope.filename)) {
         $scope.indexedFile.push($scope.filename);
-        $scope.showMessage = false;
       } else {
-        $scope.showMessage = true;
-        $scope.message = 'File has already been indexed';
+        toastr.error(`${$scope.filename} file has already been indexed`);
       }
-      $scope.showSearch = true;
     }
   };
 
