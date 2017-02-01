@@ -10,6 +10,7 @@
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
   <link href="https://fonts.googleapis.com/css?family=Arsenal:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/angular-toastr/dist/angular-toastr.css" />
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -37,13 +38,8 @@
               </div>
               <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
             </div>
-            <div class="row" ng-if="showMessage" ng-cloak>
-              <div class="col s12">
-                <p class="red-text">{{message}}</p>
-              </div>
-            </div>
             <div class="row">
-              <select class="browser-default" id="uploadedFiles" ng-if="documents.length">
+              <select class="browser-default ng-cloak" id="uploadedFiles" ng-show="showUploaded">
               <option ng-if="!documents.length" disabled selected>Upload a file</option>
               <option value="" ng-if="documents.length" disabled selected>Choose your file</option>
               <option value="{{key}}" ng-repeat="(key, value) in documents">{{value.name}}</option>
@@ -88,31 +84,6 @@
               </ul>
             </div>
           </form>
-          <div class="m10 help" ng-if="!indexedFile.length">
-            <h4 class="header">Instructions</h4>
-            <div class="card horizontal">
-              <div class="card-stacked">
-                <div class="card-content">
-                  <ul>
-                    <li>1. Upload a valid JSON file</li>
-                    <li>
-                      2. Click the 'Upload' button
-                    </li>
-                    <li>3. To Create Index select a file from the dropdown</li>
-                    <li>
-                      4. Click the 'Create Index' button
-                    </li>
-                    <li>
-                      5. To Search Enter your search term(s)
-                    </li>
-                    <li>
-                      6. Click the 'Search' button
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div class="col s6">
@@ -168,6 +139,35 @@
           </form>
         </div>
       </div>
+      <div class="row">
+        <div class="col s6">
+          <div class="m10">
+            <h4 class="header">Instructions</h4>
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <ul>
+                    <li>1. Upload a valid JSON file</li>
+                    <li>
+                      2. Click the 'Upload' button
+                    </li>
+                    <li>3. To Create Index select a file from the dropdown</li>
+                    <li>
+                      4. Click the 'Create Index' button
+                    </li>
+                    <li>
+                      5. To Search Enter your search term(s)
+                    </li>
+                    <li>
+                      6. Click the 'Search' button
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
   </main>
@@ -181,6 +181,7 @@
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js">
   </script>
+  <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
   <script src="inverted-index.js"></script>
   <script src="app.js"></script>
 
