@@ -63,7 +63,7 @@
                       <thead>
                         <tr>
                           <th>Words</th>
-                          <th ng-repeat="(keys, val) in docsInFile(value)">{{val.title}}
+                          <th ng-repeat="(keys, val) in docsInFile(value)">{{ 'Doc '+(keys+1)}}
                           </th>
                         </tr>
                       </thead>
@@ -145,7 +145,7 @@
                 <thead>
                   <tr>
                     <th>{{key}}</th>
-                    <th ng-repeat="value in docsInFile(key)">{{value.title}}</th>
+                    <th ng-repeat="(key,value) in docsInFile(key)">{{ 'Doc '+(key+1)}}</th>
                   </tr>
                 </thead>
                 <tbody>
