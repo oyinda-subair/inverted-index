@@ -15,8 +15,8 @@ class InvertedIndex {
 
   /**
    * A token method
-   * @param {Array} words
-   * @returns {Array} Returns array
+   * @param {String} words
+   * @returns {String} Returns array
    */
   static tokenize(words) {
     // exclude start and end white-space
@@ -25,12 +25,12 @@ class InvertedIndex {
 
   /**
    * A method to filter for unique words
-   * @param {Array} words
-   * @returns {Array} Returns array
+   * @param {String} words
+   * @returns {String} Returns array
    */
   static distinctWords(words) {
     const tokens = InvertedIndex.tokenize(words);
-    // remove multile words
+    // remove multiple words
     return tokens.filter((item, index) =>
       tokens.indexOf(item) === index);
   }
@@ -102,7 +102,7 @@ class InvertedIndex {
   /**
    * validateFile a method to validate json file
    * @param {Object} file
-   * @returns {Array} Returns boolean and a message.
+   * @returns {Object} Returns boolean and a message.
    */
   validateFile(file) {
     this.file = file;

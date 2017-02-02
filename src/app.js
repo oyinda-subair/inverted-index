@@ -16,7 +16,7 @@ app.controller('IndexController', ($scope, toastr) => {
       if (/application\/json/.test(file.type)) {
         const reader = new FileReader();
         if ($scope.filenames.includes(file.name)) {
-          toastr.error(`${file.name} has already been uploaded`);
+          toastr.error(`${file.name} has already been uploaded`, Error);
           return;
         }
         reader.readAsText(file);
@@ -38,7 +38,7 @@ app.controller('IndexController', ($scope, toastr) => {
             $scope.filenames.push(details.name);
             $scope.showUploaded = true;
             $scope.showSearch = true;
-            toastr.success(`${file.name} ${secValue}`);
+            toastr.success(`${file.name} ${secValue}`, Error);
           }
         };
       } else {

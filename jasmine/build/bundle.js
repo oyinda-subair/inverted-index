@@ -48,6 +48,7 @@ describe('Read book data', () => {
   it('Should return false if json does not contain title and text', () => {
     expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
   });
+
   const result = 'File is empty please upload a new file';
   it(`Should return ${result} for empty json file`, () => {
     expect(invertedIndex.validateFile(nocontent).msg).toEqual(result);
@@ -58,9 +59,11 @@ describe('Populate Index', () => {
   it('Should ensure that index is created once the file has been read', () => {
     expect(invertedIndex.createIndex('books.json', validbook)).toBeDefined();
   });
+
   it('Should maps the string keys to the correct object', () => {
     expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
   });
+
   it('Should return an object that is an accurate index of the json file',
     () => {
       expect(invertedIndex.getIndex('books.json')).toBeDefined();
@@ -76,11 +79,13 @@ describe('Search Index', () => {
       }
     });
   });
+
   it('Should return books.json:{} when no result is found',
     () => {
       expect(invertedIndex.searchIndex('along',
         invertedIndex.getIndex()[0])).toEqual({ 'books.json': {} });
     });
+
   it('Should return correct index in an array search terms', () => {
     expect(invertedIndex.searchIndex('alice, [hole,[a]]')).toEqual({
       'books.json': {
