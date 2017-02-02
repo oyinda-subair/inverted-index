@@ -38,7 +38,7 @@ app.controller('IndexController', ($scope, toastr) => {
             $scope.filenames.push(details.name);
             $scope.showUploaded = true;
             $scope.showSearch = true;
-            toastr.success(`${file.name} ${secValue}`, Error);
+            toastr.success(`${file.name} ${secValue}`, 'Success');
           }
         };
       } else {
@@ -63,7 +63,7 @@ app.controller('IndexController', ($scope, toastr) => {
       if (!$scope.indexedFile.includes($scope.filename)) {
         $scope.indexedFile.push($scope.filename);
       } else {
-        toastr.error(`${$scope.filename} file has already been indexed`);
+        toastr.error(`${$scope.filename} file has already been indexed`, Error);
       }
     }
   };
