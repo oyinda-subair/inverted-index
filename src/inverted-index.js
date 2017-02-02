@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: "off"*/
+/* eslint class-methods-use-this: "off"*/
 
 /**
  * An inverted index class.
@@ -42,7 +43,7 @@ class InvertedIndex {
    * @returns {Object} Returns object containing index
    */
   createIndex(fileName, docToIndex) {
-    const newindex = {};
+    const newIndex = {};
     const wordsToIndex = [];
 
     docToIndex.forEach((document) => {
@@ -54,16 +55,15 @@ class InvertedIndex {
     const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
 
     uniqueContent.forEach((word) => {
-      newindex[word] = [];
+      newIndex[word] = [];
 
       wordsToIndex.forEach((doc, indexPosition) => {
         if (doc.indexOf(word) > -1) {
-          newindex[word].push(indexPosition);
+          newIndex[word].push(indexPosition);
         }
       });
     });
-    this.index[fileName] = newindex;
-    return this.index;
+    this.index[fileName] = newIndex;
   }
 
   /**
@@ -105,12 +105,11 @@ class InvertedIndex {
    * @returns {Object} Returns boolean and a message.
    */
   validateFile(file) {
-    this.file = file;
-    const jsonFile = this.file;
+    const jsonFile = file;
     let check = true;
 
     try {
-      if (typeof file !== 'object' || file.length === 0) {
+      if (file === '' || typeof file !== 'object' || file.length === 0) {
         return { status: false, msg: 'File is empty please upload a new file' };
       }
       jsonFile.forEach((key) => {
