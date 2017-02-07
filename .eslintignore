@@ -2,5 +2,5 @@ jasmine/lib
 node_modules
 .vscode
 karma.conf.js
-jasmine/build
+jasmine/build/bundle.js
 src/js/

@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: "off"*/
+/* eslint class-methods-use-this: "off"*/
 
 /**
  * An inverted index class.
@@ -15,8 +16,8 @@ class InvertedIndex {
 
   /**
    * A token method
-   * @param {Array} words
-   * @returns {Array} Returns array
+   * @param {String} words
+   * @returns {String} Returns array
    */
   static tokenize(words) {
     // exclude start and end white-space
@@ -25,12 +26,12 @@ class InvertedIndex {
 
   /**
    * A method to filter for unique words
-   * @param {Array} words
-   * @returns {Array} Returns array
+   * @param {String} words
+   * @returns {String} Returns array
    */
   static distinctWords(words) {
     const tokens = InvertedIndex.tokenize(words);
-    // remove multile words
+    // remove multiple words
     return tokens.filter((item, index) =>
       tokens.indexOf(item) === index);
   }
@@ -42,9 +43,8 @@ class InvertedIndex {
    * @returns {Object} Returns object containing index
    */
   createIndex(fileName, docToIndex) {
-    const newindex = {};
+    const newIndex = {};
     const wordsToIndex = [];
-
     docToIndex.forEach((document) => {
       wordsToIndex
         .push(`${document.title.toLowerCase()} ${document.text
@@ -54,16 +54,15 @@ class InvertedIndex {
     const uniqueContent = InvertedIndex.distinctWords(wordsToIndex.join(' '));
 
     uniqueContent.forEach((word) => {
-      newindex[word] = [];
+      newIndex[word] = [];
 
       wordsToIndex.forEach((doc, indexPosition) => {
         if (doc.indexOf(word) > -1) {
-          newindex[word].push(indexPosition);
+          newIndex[word].push(indexPosition);
         }
       });
     });
-    this.index[fileName] = newindex;
-    return this.index;
+    this.index[fileName] = newIndex;
   }
 
   /**
@@ -102,29 +101,36 @@ class InvertedIndex {
   /**
    * validateFile a method to validate json file
    * @param {Object} file
-   * @returns {Array} Returns boolean and a message.
+   * @returns {Object} Returns boolean and a message.
    */
   validateFile(file) {
-    this.file = file;
-    const jsonFile = this.file;
-    let check = true;
+    const jsonFile = file;
+    let check = {
+      status: true,
+      msg: 'Valid File'
+    };
 
     try {
       if (typeof file !== 'object' || file.length === 0) {
-        return { status: false, msg: 'File is empty please upload a new file' };
+        check = {
+          status: false,
+          msg: 'File is empty please upload a new file'
+        };
       }
       jsonFile.forEach((key) => {
         if (key.title === undefined || key.text === undefined) {
-          check = false;
+          check = {
+            status: false,
+            msg: 'Invalid file content'
+          };
         }
       });
-
-      if (!check) {
-        throw new Error('Invalid File Content');
-      }
-      return { status: true, msg: 'File Uploaded Successfully' };
     } catch (error) {
-      return { status: false, msg: 'Invalid File Content' };
+      check = {
+        status: false,
+        msg: 'Invalid File'
+      };
     }
+    return check;
   }
 }

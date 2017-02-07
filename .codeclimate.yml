@@ -6,7 +6,11 @@ engines:
   duplication:
     enabled: true
     checks:
+      fatal:
+        enabled: false
       Similar code:
+        enabled: false
+      Identical code:
         enabled: false
     config:
       languages:
