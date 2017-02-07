@@ -1,29 +1,29 @@
 body {
-    font-family: 'Arsenal', sans-serif;
-    background: mintcream;
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  font-family: 'Arsenal', sans-serif;
+  background: mintcream;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 main {
-    flex: 1 0 auto;
-    font-size: 16px;
+  flex: 1 0 auto;
+  font-size: 16px;
 }
 
 table {
-    border: 1px solid #000;
+  border: 1px solid #000;
 }
 
 .collapsible-body {
-    max-height: 400px;
-    overflow: auto;
+  max-height: 400px;
+  overflow: auto;
 }
 
 .help,
 footer.nav {
-    position: absolute;
-    bottom: 0;
+  position: absolute;
+  bottom: 0;
 }
 
 [ng\:cloak],
@@ -32,9 +32,17 @@ footer.nav {
 [x-ng-cloak],
 .ng-cloak,
 .x-ng-cloak {
-    display: none !important;
+  display: none !important;
 }
 
 .info {
-    text-align: center;
+  text-align: center;
+}
+
+.checkbox-div {
+  margin-left: 35px;
+}
+
+.checkbox-label {
+  padding-right: 10px;
 }
