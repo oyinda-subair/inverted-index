@@ -6,20 +6,23 @@
 An application that creates an Index from a JSON array of one or more text objects , it is designed to allow very fast full-text searches.
 
 ## Features
-* Upload a JSON file in the format
-```
-[
-  {
-    "title": "Alice in Wonderland",
-    "text": "Alice falls into a rabbit hole and enters a world full of imagination."
-  },
+  * Upload a JSON file in the format
+  ```
+  [
+    {
+      "title": "Alice in Wonderland",
+      "text": "Alice falls into a rabbit hole and enters a world full of imagination."
+    },
 
-  {
-    "title": "The Lord of the Rings: The Fellowship of the Ring.",
-    "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
-  }
-]
-```
+    {
+      "title": "The Lord of the Rings: The Fellowship of the Ring.",
+      "text": "An unusual alliance of man, elf, dwarf, wizard and hobbit seek to destroy a powerful ring."
+    }
+  ]
+  ```
+  * Application allow for multiple upload
+  * Index words
+  * Search indexed words in file
 
 ## Usage
 * The application can be access online [here](https://osubair-inverted-index.herokuapp.com/)
@@ -50,3 +53,9 @@ An application that creates an Index from a JSON array of one or more text objec
 
 ## Limitations
   * Only files with `.json` extension can be indexed
+
+## Contributions
+  * Clone the repository.
+  * Install depenencies
+  * Create a new branch for included feature(s) using the keyword `feature/` example `feature/new-feature`.
+  * Raise a pull request.

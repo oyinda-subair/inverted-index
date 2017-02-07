@@ -30,7 +30,7 @@ gulp.task('browser-sync', () => {
   });
 });
 
-gulp.task('browserTest', () => {
+gulp.task('browserTest', ['scripts'], () => {
   tbs.init({
     server: {
       baseDir: ['./src', './jasmine'],
@@ -53,7 +53,7 @@ gulp.task('karma', ['scripts'], (done) => {
   });
 });
 
-gulp.task('watch', ['browser-sync'], () => {
+gulp.task('watch', ['browser-sync', 'browserTest'], () => {
   gulp.watch('src/*.js', reload);
   gulp.watch('src/css/*.css', reload);
   gulp.watch('src/*.html').on('change', reload);
@@ -68,7 +68,7 @@ gulp.task('watch', ['browser-sync'], () => {
 // create a default task and just log a message
 gulp.task('default', [
   'browser-sync', 'scripts', 'watch', 'browserTest'
-], () => {});
+]);
 
 // gulp test
 gulp.task('test', ['scripts', 'karma']);

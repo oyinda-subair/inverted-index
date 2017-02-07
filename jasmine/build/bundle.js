@@ -19,6 +19,18 @@ module.exports=""
 
 },{}],4:[function(require,module,exports){
 module.exports=[{
+    "title": "Checkpoint one",
+    "text": "Testing getIndex function"
+  },
+
+  {
+    "title": "Checkpoint Two",
+    "text": "Coming soon"
+  }
+]
+
+},{}],5:[function(require,module,exports){
+module.exports=[{
     "name": "my name is Oyindamola Subair",
     "text": "Alice falls into a rabbit hole and enters a world full of imagination."
   },
@@ -28,12 +40,16 @@ module.exports=[{
   }
 ]
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 const invertedIndex = new InvertedIndex();
-const validbook = require('../books.json');
+const validBook = require('../books.json');
 const emptyBook = require('../empty-book.json');
 const invalidBook = require('../no-title-books.json');
-const nocontent = require('../empty.json');
+const noContent = require('../empty.json');
+const feedbackBook = require('../feedback.json');
+
+invertedIndex.createIndex('books.json', validBook);
+invertedIndex.createIndex('feedback.json', feedbackBook);
 
 // this is test suite
 describe('Read book data', () => {
@@ -42,31 +58,41 @@ describe('Read book data', () => {
   });
 
   it('Should return true for valid json file', () => {
-    expect(invertedIndex.validateFile(validbook).status).toEqual(true);
+    expect(invertedIndex.validateFile(feedbackBook).status).toEqual(true);
   });
 
-  it('Should return false if json does not contain title and text', () => {
-    expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
+  const report = 'Invalid file content';
+  it(`Should return ${report} if json does not contain title and text`, () => {
+    expect(invertedIndex.validateFile(invalidBook).msg).toEqual(report);
   });
 
-  const result = 'File is empty please upload a new file';
+  const result = 'Invalid File';
   it(`Should return ${result} for empty json file`, () => {
-    expect(invertedIndex.validateFile(nocontent).msg).toEqual(result);
+    expect(invertedIndex.validateFile(noContent).msg).toEqual(result);
   });
 });
 
 describe('Populate Index', () => {
   it('Should ensure that index is created once the file has been read', () => {
-    expect(invertedIndex.createIndex('books.json', validbook)).toBeDefined();
+    expect(invertedIndex.getIndex('books.json', validBook)).toBeDefined();
   });
 
   it('Should maps the string keys to the correct object', () => {
-    expect(invertedIndex.getIndex('books.json').alice).toEqual([0]);
+    expect(invertedIndex.getIndex('feedback.json').checkpoint).toEqual([0, 1]);
   });
 
   it('Should return an object that is an accurate index of the json file',
     () => {
-      expect(invertedIndex.getIndex('books.json')).toBeDefined();
+      expect(invertedIndex.getIndex('feedback.json')).toEqual({
+        checkpoint: [0, 1],
+        one: [0],
+        testing: [0],
+        getindex: [0],
+        function: [0],
+        two: [1],
+        coming: [1],
+        soon: [1]
+      });
     });
 });
 
@@ -76,25 +102,28 @@ describe('Search Index', () => {
       'books.json': {
         alice: [0],
         a: [0, 1]
-      }
+      },
+      'feedback.json': {}
     });
   });
 
-  it('Should return books.json:{} when no result is found',
+  it('Should return empty object if no result is found',
     () => {
-      expect(invertedIndex.searchIndex('along',
-        invertedIndex.getIndex()[0])).toEqual({ 'books.json': {} });
+      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
+        'books.json': {},
+        'feedback.json': {}
+      });
     });
 
   it('Should return correct index in an array search terms', () => {
-    expect(invertedIndex.searchIndex('alice, [hole,[a]]')).toEqual({
-      'books.json': {
-        alice: [0],
-        hole: [0],
-        a: [0, 1]
+    expect(invertedIndex.searchIndex('checkpoint [one]')).toEqual({
+      'books.json': {},
+      'feedback.json': {
+        checkpoint: [0, 1],
+        one: [0]
       }
     });
   });
 });
 
-},{"../books.json":1,"../empty-book.json":2,"../empty.json":3,"../no-title-books.json":4}]},{},[5])
+},{"../books.json":1,"../empty-book.json":2,"../empty.json":3,"../feedback.json":4,"../no-title-books.json":5}]},{},[6])
