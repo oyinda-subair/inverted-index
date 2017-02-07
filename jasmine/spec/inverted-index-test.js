@@ -1,3 +1,5 @@
+/* eslint import/no-unresolved: off */
+
 const invertedIndex = new InvertedIndex();
 const validBook = require('../books.json');
 const emptyBook = require('../empty-book.json');
@@ -66,7 +68,8 @@ describe('Search Index', () => {
 
   it('Should return empty object if no result is found',
     () => {
-      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
+      expect(invertedIndex.searchIndex(
+      'along', invertedIndex.getIndex()[0])).toEqual({
         'books.json': {},
         'feedback.json': {}
       });
