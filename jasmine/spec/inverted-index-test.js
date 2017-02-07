@@ -1,4 +1,4 @@
-/* eslint import/no-unresolved: off */
+/* eslint import/no-unresolved: off*/
 
 const invertedIndex = new InvertedIndex();
 const validBook = require('../books.json');
