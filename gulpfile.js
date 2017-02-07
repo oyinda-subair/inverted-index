@@ -38,7 +38,8 @@ gulp.task('browserTest', ['scripts'], () => {
     },
     port: 8888,
     ui: false,
-    ghostMode: false
+    ghostMode: false,
+    open: false
   });
 });
 

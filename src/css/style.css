@@ -34,3 +34,7 @@ footer.nav {
 .x-ng-cloak {
     display: none !important;
 }
+
+.info {
+    text-align: center;
+}

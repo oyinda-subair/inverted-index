@@ -24,16 +24,49 @@
     <div ng-controller="IndexController">
       <!-- Page Content goes here -->
       <div class="row">
+        <div class="col s12">
+          <ul class="collapsible popout" data-collapsible="accordion">
+            <li>
+              <div class="collapsible-header active"><i class="material-icons">info</i>Instructions <span class="right"><i class="material-icons">fullscreen</i>Click to collapse or Expand</span></div>
+              <div class="collapsible-body white">
+                <ul class="info">
+                  <li>1. Upload a valid JSON file</li>
+                  <li>
+                    2. Click the 'Upload' button
+                  </li>
+                  <li>3. To Create Index select a file from the dropdown</li>
+                  <li>
+                    4. Click the 'Create Index' button
+                  </li>
+                  <li>
+                    5. Then Search by entering your search term(s) in the search text field.
+                  </li>
+                  <li>
+                    6. Check the box of the file you want to search from.
+                  </li>
+                  <li>
+                    7. If you want to search all files you do not need to check any box
+                  </li>
+                  <li>
+                    8. Click the 'Search' button
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
         <div class="col s6">
           <form>
             <div class="row">
               <div class="file-field input-field col s12">
                 <div class="btn waves-effect waves-light purple lighten-1">
                   <span>Browse</span>
-                  <input type="file" id="files" name="files[]" multiple>
+                  <input type="file" id="files" name="files" multiple>
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="Upload one or more files" readonly>
+                  <input class="file-path validate" type="text" placeholder="Upload one or more files" ng-model="upload" readonly>
                 </div>
               </div>
               <button class="btn waves-effect waves-light purple lighten-1 right" type="submit" name="submit" ng-click="uploadFile()">Upload<i class="material-icons right">file_upload</i></button>
@@ -53,7 +86,7 @@
             <div class="row" ng-show="showIndexTable" ng-cloak>
               <ul class="collapsible popout" data-collapsible="accordion">
                 <li ng-repeat="(key, value) in indexedFile | orderBy:key:true">
-                  <div class="collapsible-header" ng-class="{'active': key == indexedFile.length - 1}"><i class="material-icons">arrow_drop_down_circle</i>{{value}}</div>
+                  <div toggle class="collapsible-header" ng-class="class"><i class="material-icons">arrow_drop_down_circle</i>{{value}}</div>
                   <div class="collapsible-body white">
                     <table class="striped">
                       <thead>
@@ -135,33 +168,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col s6">
-          <div class="m6">
-            <h4 class="header">Instructions</h4>
-            <div class="card horizontal">
-              <div class="card-stacked">
-                <div class="card-content">
-                  <ul>
-                    <li>1. Upload a valid JSON file</li>
-                    <li>
-                      2. Click the 'Upload' button
-                    </li>
-                    <li>3. To Create Index select a file from the dropdown</li>
-                    <li>
-                      4. Click the 'Create Index' button
-                    </li>
-                    <li>
-                      5. To Search Enter your search term(s)
-                    </li>
-                    <li>
-                      6. Click the 'Search' button
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
 
@@ -179,7 +186,6 @@
   <script src="https://unpkg.com/angular-toastr/dist/angular-toastr.tpls.js"></script>
   <script src="inverted-index.js"></script>
   <script src="app.js"></script>
-
 </body>
 
 </html>

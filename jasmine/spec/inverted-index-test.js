@@ -18,11 +18,12 @@ describe('Read book data', () => {
     expect(invertedIndex.validateFile(feedbackBook).status).toEqual(true);
   });
 
-  it('Should return false if json does not contain title and text', () => {
-    expect(invertedIndex.validateFile(invalidBook).status).toEqual(false);
+  const report = 'Invalid file content';
+  it(`Should return ${report} if json does not contain title and text`, () => {
+    expect(invertedIndex.validateFile(invalidBook).msg).toEqual(report);
   });
 
-  const result = 'File is empty please upload a new file';
+  const result = 'Invalid File';
   it(`Should return ${result} for empty json file`, () => {
     expect(invertedIndex.validateFile(noContent).msg).toEqual(result);
   });
@@ -65,8 +66,7 @@ describe('Search Index', () => {
 
   it('Should return empty object when no result is found',
     () => {
-      expect(invertedIndex.searchIndex('along',
-        invertedIndex.getIndex()[0])).toEqual({
+      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
         'books.json': {},
         'feedback.json': {}
       });

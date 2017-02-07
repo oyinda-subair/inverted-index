@@ -45,7 +45,6 @@ class InvertedIndex {
   createIndex(fileName, docToIndex) {
     const newIndex = {};
     const wordsToIndex = [];
-
     docToIndex.forEach((document) => {
       wordsToIndex
         .push(`${document.title.toLowerCase()} ${document.text
@@ -106,24 +105,32 @@ class InvertedIndex {
    */
   validateFile(file) {
     const jsonFile = file;
-    let check = true;
+    let check = {
+      status: true,
+      msg: 'Valid File'
+    };
 
     try {
-      if (file === '' || typeof file !== 'object' || file.length === 0) {
-        return { status: false, msg: 'File is empty please upload a new file' };
+      if (typeof file !== 'object' || file.length === 0) {
+        check = {
+          status: false,
+          msg: 'File is empty please upload a new file'
+        };
       }
       jsonFile.forEach((key) => {
         if (key.title === undefined || key.text === undefined) {
-          check = false;
+          check = {
+            status: false,
+            msg: 'Invalid file content'
+          };
         }
       });
-
-      if (!check) {
-        throw new Error('Invalid File Content');
-      }
-      return { status: true, msg: 'File Uploaded Successfully' };
     } catch (error) {
-      return { status: false, msg: 'Invalid File Content' };
+      check = {
+        status: false,
+        msg: 'Invalid File'
+      };
     }
+    return check;
   }
 }
