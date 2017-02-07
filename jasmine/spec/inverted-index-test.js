@@ -1,5 +1,3 @@
-/* eslint import/no-unresolved: off*/
-
 const invertedIndex = new InvertedIndex();
 const validBook = require('../books.json');
 const emptyBook = require('../empty-book.json');
