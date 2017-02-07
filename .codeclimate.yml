@@ -5,6 +5,8 @@ engines:
     channel: "eslint-2"
   duplication:
     enabled: true
+    exclude_fingerprints:
+    - 48d9bbf916b3f2a2aebd24613c52d848
     checks:
       Similar code:
         enabled: false
