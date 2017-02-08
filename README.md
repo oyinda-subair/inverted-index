@@ -20,9 +20,9 @@ An application that creates an Index from a JSON array of one or more text objec
     }
   ]
   ```
-  * Application allow for multiple upload
-  * Index words
-  * Search indexed words in file
+  * Application allow for multiple file uploads
+  * Create index of the words in the json file
+  * Search indexed words
 
 ## Usage
 * The application can be access online [here](https://osubair-inverted-index.herokuapp.com/)
