@@ -20,7 +20,7 @@ An application that creates an Index from a JSON array of one or more text objec
     }
   ]
   ```
-  * Application allow for multiple upload
+  * Application allow for multiple file uploads
   * Create index of the words in the json file
   * Search indexed words
 
