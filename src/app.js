@@ -54,8 +54,6 @@ app.controller('IndexController', ($scope, toastr) => {
 
   // create index click function.
   $scope.indexFile = () => {
-    jQuery('.colp').removeClass('active');
-    jQuery('.colp').collapsible({ accordion: true });
     $scope.showIndexTable = true;
     const selectedFile = document.getElementById('uploadedFiles');
     const sFileIndex = selectedFile.selectedIndex;
@@ -69,8 +67,6 @@ app.controller('IndexController', ($scope, toastr) => {
       if (!$scope.indexedFile.includes($scope.fileName)) {
         invertedIndex.createIndex($scope.fileName, $scope.docs);
         $scope.indexedFile.push($scope.fileName);
-        jQuery('.colp').addClass('active');
-        jQuery('.colp').collapsible({ accordion: false });
       } else {
         toastr.error(
           `${$scope.fileName} file has already been indexed`, 'Error');

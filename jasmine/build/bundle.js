@@ -109,7 +109,8 @@ describe('Search Index', () => {
 
   it('Should return empty object if no result is found',
     () => {
-      expect(invertedIndex.searchIndex('along', invertedIndex.getIndex()[0])).toEqual({
+      expect(invertedIndex.searchIndex(
+      'along', invertedIndex.getIndex()[0])).toEqual({
         'books.json': {},
         'feedback.json': {}
       });
